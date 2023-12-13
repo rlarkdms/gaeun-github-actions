@@ -1,0 +1,17 @@
+name: timeout
+on:
+  push:
+
+jobs:
+  timeout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+    - name: loop
+      timeout-minutes: 1
+      run: |
+        while true; do
+          sleep 1
+        done
+      
+
