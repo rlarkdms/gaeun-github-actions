@@ -1,0 +1,34 @@
+name: repo-create
+on: 
+  workflow-dispatch:
+    inputs:
+      name:
+        description: 'set name'
+        required: true
+        default: 'github-actions'
+        type: string
+      environment:
+        description: 'prefix'
+        required: true
+        default: 'service'
+        type: choice
+        options:
+        - example
+        - service
+
+jobs:
+  repo-create:
+    runs-on: ubuntu-latest
+    steps:
+    - name: gh login
+      run: |
+        echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
+    - name: repo-create
+      id: repo-create
+      run: |  
+        gh repo create sangwon-action/${{ inputs.prefix }}-${{ inputs.name }} --public --add-readme
+
+
+    # - name: slack-alert
+    #   if: always()
+    #   run: |
